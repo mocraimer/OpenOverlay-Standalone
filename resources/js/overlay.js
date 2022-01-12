@@ -8,9 +8,11 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
     wsHost: process.env.MIX_PUSHER_APP_HOST ? process.env.MIX_PUSHER_APP_HOST : window.location.hostname,
-    wsPort: 6001,
-    forceTLS: false,
+    wsPort: window.APP_DEBUG ? 6001 : 6002,
+    wssPort: window.APP_DEBUG ? 6001 : 6002,
+    forceTLS: !window.APP_DEBUG,
     disableStats: true,
+    enabledTransports: ['ws', 'wss'],
 });
 
 const twitchUserId = document.body.getAttribute('data-twitch-user');
